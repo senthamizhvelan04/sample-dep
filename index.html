@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS EC2 Concept</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    </script>
+</head>
+<body class="bg-gray-50 font-sans text-gray-800">
+
+    <!-- Hero Section -->
+    <header class="bg-blue-900 text-white py-16">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-5xl font-bold mb-4">Amazon Elastic Compute Cloud (EC2)</h1>
+            <p class="text-xl max-w-2xl mx-auto text-blue-200">A comprehensive guide to understanding core EC2 concepts, architecture, and components.</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12">
+        
+        <!-- Architecture Diagram Section -->
+        <section class="mb-16 bg-white p-8 rounded-lg shadow-sm border border-gray-100">
+            <h2 class="text-3xl font-bold mb-6 text-blue-900 border-b pb-2">EC2 Architecture Overview</h2>
+            <p class="mb-6 text-gray-600">The diagram below illustrates how an EC2 instance fits into the broader AWS networking and storage ecosystem.</p>
+            
+            <div class="flex justify-center bg-gray-50 p-6 rounded-lg border border-gray-200">
+                <div class="mermaid">
+                    graph TD
+                        subgraph "AWS Cloud"
+                            subgraph "Region (e.g., us-east-1)"
+                                subgraph "VPC (Virtual Private Cloud)"
+                                    IGW[Internet Gateway] --- PublicSubnet
+                                    
+                                    subgraph "Availability Zone (e.g., us-east-1a)"
+                                        subgraph "Public Subnet"
+                                            SG[Security Group <br> Virtual Firewall]
+                                            SG --- EC2[EC2 Instance <br> Virtual Server]
+                                            EC2 --- EBS[EBS Volume <br> Block Storage]
+                                            EC2 --- KeyPair[Key Pair <br> SSH Access]
+                                        end
+                                    end
+                                end
+                            end
+                        end
+                        User((User)) -->|HTTP/SSH| IGW
+                        
+                        classDef aws bg:#ff9900,color:white,stroke:#232f3e,stroke-width:2px;
+                        classDef vpc bg:#e6f2ff,stroke:#0055cc,stroke-width:2px,stroke-dasharray: 5 5;
+                        classDef ec2 bg:#ff9900,color:white,stroke-width:0px;
+                        classDef sg bg:#ff4d4d,color:white,stroke-width:0px;
+                        classDef storage bg:#4d4dff,color:white,stroke-width:0px;
+                        
+                        class EC2 ec2;
+                        class SG sg;
+                        class EBS storage;
+                </div>
+            </div>
+        </section>
+
+        <!-- Concepts Grid -->
+        <h2 class="text-3xl font-bold mb-8 text-blue-900 border-b pb-2">Core Concepts</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <!-- Instance Types -->
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                <div class="text-blue-600 text-3xl mb-4"><i class="fas fa-server"></i></div>
+                <h3 class="text-xl font-bold mb-2">Instance Types</h3>
+                <p class="text-gray-600 text-sm">Determine the hardware of the host computer used for your instance. Each instance type offers different compute, memory, and storage capabilities.</p>
+                <ul class="mt-4 text-sm text-gray-500 list-disc list-inside">
+                    <li>General Purpose (t3, m5)</li>
+                    <li>Compute Optimized (c5)</li>
+                    <li>Memory Optimized (r5)</li>
+                </ul>
+            </div>
+
+            <!-- AMIs -->
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                <div class="text-blue-600 text-3xl mb-4"><i class="fas fa-compact-disc"></i></div>
+                <h3 class="text-xl font-bold mb-2">AMIs (Amazon Machine Images)</h3>
+                <p class="text-gray-600 text-sm">Provides the information required to launch an instance. You must specify an AMI when you launch an instance (e.g., Ubuntu, Amazon Linux, Windows Server).</p>
+                <ul class="mt-4 text-sm text-gray-500 list-disc list-inside">
+                    <li>OS & Software configuration</li>
+                    <li>Launch permissions</li>
+                    <li>Block device mapping</li>
+                </ul>
+            </div>
+
+            <!-- Security Groups -->
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                <div class="text-blue-600 text-3xl mb-4"><i class="fas fa-shield-alt"></i></div>
+                <h3 class="text-xl font-bold mb-2">Security Groups</h3>
+                <p class="text-gray-600 text-sm">Acts as a virtual firewall for your EC2 instances to control incoming (inbound) and outgoing (outbound) traffic. They operate at the instance level.</p>
+                <ul class="mt-4 text-sm text-gray-500 list-disc list-inside">
+                    <li>Stateful rules</li>
+                    <li>Default deny all inbound</li>
+                    <li>Allow specific ports (e.g., 22, 80)</li>
+                </ul>
+            </div>
+
+            <!-- Elastic Block Store (EBS) -->
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                <div class="text-blue-600 text-3xl mb-4"><i class="fas fa-database"></i></div>
+                <h3 class="text-xl font-bold mb-2">EBS Volumes</h3>
+                <p class="text-gray-600 text-sm">Persistent block storage volumes for use with Amazon EC2 instances. Think of it as a network-attached hard drive that survives instance termination.</p>
+                <ul class="mt-4 text-sm text-gray-500 list-disc list-inside">
+                    <li>GP2/GP3 (General Purpose SSD)</li>
+                    <li>IO1/IO2 (Provisioned IOPS)</li>
+                    <li>Can be snapshot for backups</li>
+                </ul>
+            </div>
+
+            <!-- Key Pairs -->
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                <div class="text-blue-600 text-3xl mb-4"><i class="fas fa-key"></i></div>
+                <h3 class="text-xl font-bold mb-2">Key Pairs</h3>
+                <p class="text-gray-600 text-sm">Public key cryptography used to encrypt and decrypt login information. AWS stores the public key, and you store the private key (.pem file).</p>
+                <ul class="mt-4 text-sm text-gray-500 list-disc list-inside">
+                    <li>Used for SSH (Linux)</li>
+                    <li>Used to decrypt password (Windows)</li>
+                </ul>
+            </div>
+
+            <!-- Elastic IP -->
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                <div class="text-blue-600 text-3xl mb-4"><i class="fas fa-network-wired"></i></div>
+                <h3 class="text-xl font-bold mb-2">Elastic IPs</h3>
+                <p class="text-gray-600 text-sm">A static, public IPv4 address designed for dynamic cloud computing. You can associate it with an instance to ensure the public IP doesn't change on reboot.</p>
+                <ul class="mt-4 text-sm text-gray-500 list-disc list-inside">
+                    <li>Static public address</li>
+                    <li>Mask failure by remapping</li>
+                </ul>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-8 mt-12">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2026 AWS Learning Concepts. Built for educational purposes.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
