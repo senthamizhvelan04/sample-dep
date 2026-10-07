@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CI/CD Explained</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            text-align: center;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #222;
+        }
+
+        .pipeline {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 50px;
+        }
+
+        .step {
+            background: white;
+            padding: 25px;
+            width: 140px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px #ccc;
+        }
+
+        .step h2 {
+            font-size: 20px;
+        }
+
+        .arrow {
+            font-size: 30px;
+            color: #555;
+        }
+
+        .ci {
+            border-top: 5px solid #3498db;
+        }
+
+        .cd {
+            border-top: 5px solid #2ecc71;
+        }
+
+        .description {
+            margin-top: 40px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🚀 CI/CD Pipeline</h1>
+
+    <p>
+        CI/CD automatically builds, tests, and deploys your application.
+    </p>
+
+    <div class="pipeline">
+
+        <div class="step">
+            <h2>👨‍💻 Code</h2>
+            <p>Developer writes code</p>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="step ci">
+            <h2>🔄 CI</h2>
+            <p>Build & Test</p>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="step ci">
+            <h2>✅ Test</h2>
+            <p>Check for errors</p>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="step cd">
+            <h2>🚀 CD</h2>
+            <p>Deploy application</p>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="step">
+            <h2>☁️ Production</h2>
+            <p>Users access app</p>
+        </div>
+
+    </div>
+
+    <div class="description">
+
+        <h2>What is CI?</h2>
+        <p>
+            <b>Continuous Integration</b> means automatically
+            building and testing the code whenever a developer
+            pushes changes.
+        </p>
+
+        <h2>What is CD?</h2>
+        <p>
+            <b>Continuous Deployment</b> means automatically
+            deploying the tested application to the server.
+        </p>
+
+        <h2>Example</h2>
+        <p>
+            Developer → GitHub → GitHub Actions → Test → Docker →
+            AWS EC2 → Users
+        </p>
+
+    </div>
+
+</body>
+</html>
